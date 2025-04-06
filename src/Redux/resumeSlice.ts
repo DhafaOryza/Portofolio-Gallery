@@ -3,7 +3,7 @@ import axios from "axios";
 import { API_URL } from "../utils/api";
 
 export const fetchResume = createAsyncThunk("resume/fetch", async () => {
-    const res = await axios.get(`${API_URL}api/resume`);
+    const res = await axios.get(`${API_URL}/api/resume`);
     return res.data;
 });
 

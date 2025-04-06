@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import galleryReducer from "./gallerySlice";
-import resumeReducer from "./gallerySlice";
+import resumeReducer from "./resumeSlice";
 
 export const store = configureStore({
     reducer: {

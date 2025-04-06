@@ -3,7 +3,7 @@ import axios from "axios";
 import { API_URL } from "../utils/api";
 
 export const fetchGallery = createAsyncThunk("gallery/fetch", async () => {
-    const res = await axios.get(`${API_URL}api/gallery`);
+    const res = await axios.get(`${API_URL}/api/gallery`);
     return res.data;
 });
 

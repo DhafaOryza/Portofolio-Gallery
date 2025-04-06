@@ -10,9 +10,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-app.use(cors({ origin: "https://verbose-space-lamp-745gx6w4p672xrrq-5173.app.github.dev" }));
+app.use(cors({ 
+    origin: "https://verbose-space-lamp-745gx6w4p672xrrq-5173.app.github.dev",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
 app.use(express.json());
-app.use("/images", express.static("images"));
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 // Konfigurasi upload gambar degan multer
 const storage = multer.diskStorage({

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { RootState } from "./Redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGallery } from "./Redux/gallerySlice";
+import { API_URL } from "./utils/api";
 
 
 const App = () => {
@@ -18,9 +19,11 @@ const App = () => {
         {gallery.length === 0 ? (
           <p>No Portofolio Posted</p>
         ) : (
-          <div>
+          <div className="flex flex-row">
             {gallery.map((item: any) => (
-              <img src={item.imageUrl} alt={item.title} />
+              <div key={item.id}>
+                <img src={`${API_URL}${item.imageUrl}`} alt={item.title} />
+              </div>
             ))}
           </div>
         )}
