@@ -1,16 +1,22 @@
-const express = require("express");
-const fs = require("fs");
-const cors = require("cors");
-const multer = require("multer");
+import express from "express";
+import fs from "fs";
+import cors from "cors";
+import multer from "multer";
+
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: "https://verbose-space-lamp-745gx6w4p672xrrq-5173.app.github.dev" }));
 app.use(express.json());
 app.use("/images", express.static("images"));
 
 // Konfigurasi upload gambar degan multer
 const storage = multer.diskStorage({
-    destination: "images/",
+    destination: `${__dirname}/images/`,
     filename: (req, file, cb) => {
         cb(null, Date.now() + "_" + file.originalname);
     },
@@ -19,19 +25,33 @@ const upload = multer({ storage });
 
 // Fungsi membaca data.json
 const getData = () => {
-    return JSON.parse(fs.readFileSync("data.json"));
+    if (!fs.existsSync(`${__dirname}/data.json`)) {
+        fs.writeFileSync(`${__dirname}/data.json`, JSON.stringify([])); // Create file if it doesn't exist
+    }
+    return JSON.parse(fs.readFileSync(`${__dirname}/data.json`));
 };
 
 // Fungsi menulis ke data.json
 const saveData = (data) => {
-    fs.writeFileSync("data.json", JSON.stringify(data, null, 2));
+    fs.writeFileSync(`${__dirname}/data.json`, JSON.stringify(data, null, 2));
 };
+
+// Fungsi membaca resume.json
+const getResume = () => {
+    return JSON.parse(fs.readFileSync(`${__dirname}/resume.json`));
+}
 
 // **1. GET - ambil semua gambar**
 app.get("/api/gallery", (req, res) => {
     const data = getData();
     res.json(data);
 });
+
+// **1.2 GET_RESUME - ambil resume**
+app.get("/api/resume", (req, res) => {
+    const resume = getResume();
+    res.json(resume);
+})
 
 // **2. POST - Tambah gambar baru**
 app.post("/api/gallery", upload.single("image"), (req, res) => {
