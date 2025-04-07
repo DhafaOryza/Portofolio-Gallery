@@ -9,7 +9,7 @@ export const fetchResume = createAsyncThunk("resume/fetch", async () => {
 
 const resumeSlice = createSlice({
     name: "resume",
-    initialState: { items: [], loading: false },
+    initialState: { items: {}, loading: false },
     reducers: {},
     extraReducers: (builder) => {
         builder
