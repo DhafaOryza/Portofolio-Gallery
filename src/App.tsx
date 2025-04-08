@@ -41,34 +41,38 @@ const App = () => {
 
   return (
     <div className="w-full h-screen">
-      <div className="flex flex-col w-full h-2/4 gap-16 items-center justify-center">
+      <div className="flex flex-col w-full gap-16 py-16 items-center justify-center">
         <header className="flex flex-col items-center justify-start gap-1">
-          {resume.imageProfile ? (
-            <img src={resume.imageProfile} alt={resume.name} />
-          ) : (
-            <div className="flex flex-col items-center justify-center gap-1 bg-gray-700 rounded-full w-[100px] h-[100px]">
-              <div className="bg-gray-400 rounded-full w-[25px] h-[25px]" />
-              <div className="bg-gray-400 rounded-t-full w-[50px] h-[25px]" />
-            </div>
-          )}
+          <div className="image-profile mb-2 drop-shadow-2xl">
+            {resume.imageProfile ? (
+              <img src={resume.imageProfile} alt={resume.name} />
+            ) : (
+              <div className="flex flex-col items-center justify-center gap-1 bg-gray-700 rounded-full w-[100px] h-[100px]">
+                <div className="bg-gray-400 rounded-full w-[25px] h-[25px]" />
+                <div className="bg-gray-400 rounded-t-full w-[50px] h-[25px]" />
+              </div>
+            )}
+          </div>
           <h1 className="text-3xl">{resume.name}</h1>
           <h4 className="text-lg">{resume.description}</h4>
         </header>
 
         {gallery.length === 0 ? (
-          <p>No Portofolio Posted</p>
+          <section className="flex justify-center w-1/3 h-1/4 p-6 rounded-xl shadow-2xl">
+            <p>No Portofolio Posted</p>
+          </section>
         ) : (
-          <section className="flex flex-row w-1/2 gap-4">
+          <section className="flex p-6 rounded-xl shadow-2xl">
             {sortedYears.map((year) => (
               <div key={year}>
                 <h2 className="text-xl font-bold mb-2">{year}</h2>
-                <div className="flex flex-row">
-                  {gallery.map((item: any) => (
+                <div className="grid grid-cols-3 gap-4">
+                  {galleryByYear[year].map((item: any) => (
                     <img
                       key={item.id}
                       src={`${API_URL}${item.imageUrl}`}
                       alt={item.title}
-                      className="flex w-[200px] h-[200px] rounded-md p-0.5 object-cover shadow-lg"
+                      className="w-[200px] h-[200px] rounded-xl object-cover shadow-lg"
                     />
                   ))}
                 </div>
@@ -76,8 +80,8 @@ const App = () => {
             ))}
           </section>
         )}
-      </div >
-    </div >
+      </div>
+    </div>
   );
 }
 

@@ -102,7 +102,7 @@ app.delete("/api/gallery/:id", (req, res) => {
     if (index === -1) return res.status(404).json({ msg: "Gambar tidak ditemukan" });
 
     // Hapus file gambar dari folder images
-    const imagesPath = `.${data[index].imageUrl}`;
+    const imagesPath = `${__dirname}${data[index].imageUrl}`;
     if (fs.existsSync(imagesPath)) fs.unlinkSync(imagesPath);
 
     data.splice(index, 1);
