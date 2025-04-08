@@ -10,7 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-app.use(cors({ 
+app.use(cors({
     origin: "https://verbose-space-lamp-745gx6w4p672xrrq-5173.app.github.dev",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
@@ -67,6 +67,7 @@ app.post("/api/gallery", upload.single("image"), (req, res) => {
             id: Date.now(),
             title: req.body.title || "Untitled",
             description: req.body.description || "No description",
+            date: new Date().toLocaleString(),
             imageUrl: `/images/${req.file.filename}`,
         };
         data.push(newImage);
